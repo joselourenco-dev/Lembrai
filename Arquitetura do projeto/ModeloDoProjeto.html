@@ -1,0 +1,602 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:transparent}
+.wrap{padding:1rem 0}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:1px;text-transform:uppercase;margin:2rem 0 1rem;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.screens-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:2rem}
+.phone-frame{background:var(--color-background-secondary);border-radius:24px;padding:8px;border:0.5px solid var(--color-border-tertiary);width:200px;flex-shrink:0}
+.phone-inner{background:var(--color-background-primary);border-radius:18px;overflow:hidden;border:0.5px solid var(--color-border-tertiary)}
+.screen-label{font-size:11px;color:var(--color-text-secondary);text-align:center;margin-top:8px}
+
+/* status bar */
+.sb{background:#7F77DD;padding:7px 10px 6px;display:flex;justify-content:space-between;align-items:center}
+.sb-title{color:#fff;font-size:10px;font-weight:500}
+.sb-time{color:#fff;font-size:9px;opacity:0.85}
+
+/* nav bar */
+.nb{display:flex;justify-content:space-around;padding:5px 0 4px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.nb-item{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:7px;color:var(--color-text-secondary)}
+.nb-item.on{color:#7F77DD}
+.nb-item i{font-size:12px}
+
+/* content */
+.sc{padding:8px}
+.hero-card{background:#7F77DD;border-radius:8px;padding:8px 10px;margin-bottom:6px}
+.hero-card .h-greet{color:#fff;font-size:8px;opacity:0.85}
+.hero-card .h-date{color:#fff;font-size:14px;font-weight:500}
+.hero-card .h-sub{color:#fff;font-size:7px;opacity:0.8}
+
+.mini-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:7px 8px;margin-bottom:5px}
+.card-ttl{font-size:7px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.3px;margin-bottom:5px;text-transform:uppercase}
+.row-item{display:flex;align-items:center;gap:5px;padding:3px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.row-item:last-child{border-bottom:none}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dp{background:#7F77DD}.dt{background:#1D9E75}.da{background:#EF9F27}.dc{background:#D85A30}.dpk{background:#D4537E}
+.ri-name{font-size:8px;font-weight:500;flex:1}
+.ri-sub{font-size:7px;color:var(--color-text-secondary)}
+.badge{font-size:6px;padding:1px 5px;border-radius:10px;font-weight:500}
+.b-purple{background:#EEEDFE;color:#534AB7}
+.b-green{background:#E1F5EE;color:#0F6E56}
+.b-amber{background:#FAEEDA;color:#854F0B}
+.b-coral{background:#FAECE7;color:#993C1D}
+.avatar{width:18px;height:18px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:500;color:#534AB7;flex-shrink:0}
+.av-teal{background:#E1F5EE;color:#0F6E56}
+.av-amber{background:#FAEEDA;color:#854F0B}
+.chip{font-size:6px;padding:1px 6px;border-radius:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.chip.sel{background:#EEEDFE;border-color:#7F77DD;color:#534AB7}
+.chips-row{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px}
+.field{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:5px;padding:4px 6px;margin-bottom:4px}
+.field-lbl{font-size:6px;color:var(--color-text-secondary);margin-bottom:1px}
+.field-val{font-size:8px;color:var(--color-text-secondary)}
+.btn-solid{background:#7F77DD;border-radius:5px;padding:5px;text-align:center;color:#fff;font-size:7px;font-weight:500;margin-top:4px}
+.btn-outline{border:0.5px solid var(--color-border-secondary);border-radius:5px;padding:4px;text-align:center;color:var(--color-text-primary);font-size:7px;margin-top:4px}
+.chk{width:10px;height:10px;border-radius:3px;border:1px solid var(--color-border-secondary);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.chk.done{background:#1D9E75;border-color:#1D9E75}
+.progress-bg{background:var(--color-background-secondary);border-radius:10px;height:3px;margin-top:4px}
+.progress-fill{background:#7F77DD;height:3px;border-radius:10px}
+.streak-box{background:#EEEDFE;border-radius:6px;padding:5px 7px;display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.streak-n{font-size:16px;font-weight:500;color:#534AB7}
+.streak-lbl{font-size:7px;color:#534AB7}
+.notif-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.ni-p{background:#EEEDFE;color:#534AB7}
+.ni-t{background:#E1F5EE;color:#0F6E56}
+.ni-a{background:#FAEEDA;color:#854F0B}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:3px}
+.metric-cell{background:var(--color-background-secondary);border-radius:5px;padding:4px;text-align:center}
+.metric-n{font-size:12px;font-weight:500;color:#534AB7}
+.metric-lbl{font-size:6px;color:var(--color-text-secondary)}
+.tag{font-size:6px;padding:1px 5px;border-radius:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.sh-title{font-size:10px;font-weight:500}
+.sh-btn{background:#7F77DD;color:#fff;border-radius:10px;padding:2px 7px;font-size:7px}
+.detail-avatar{width:36px;height:36px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#534AB7;margin:0 auto 6px}
+.detail-name{font-size:11px;font-weight:500;text-align:center}
+.detail-sub{font-size:8px;color:var(--color-text-secondary);text-align:center;margin-bottom:8px}
+.btn-row{display:flex;gap:4px;margin-top:5px}
+.btn-row .btn-outline{flex:1;margin:0}
+.btn-row .btn-solid{flex:1;margin:0}
+.onb-illo{height:60px;background:#EEEDFE;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.onb-illo i{font-size:28px;color:#7F77DD}
+.onb-title{font-size:10px;font-weight:500;text-align:center;margin-bottom:2px}
+.onb-sub{font-size:7px;color:var(--color-text-secondary);text-align:center;margin-bottom:8px}
+.step-dots{display:flex;justify-content:center;gap:3px;margin-bottom:6px}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+.sdot.on{background:#7F77DD;border-color:#7F77DD}
+.perm-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.perm-lbl{font-size:8px}
+.toggle{width:22px;height:12px;border-radius:10px;background:#7F77DD;position:relative}
+.toggle::after{content:'';position:absolute;right:2px;top:2px;width:8px;height:8px;border-radius:50%;background:#fff}
+.toggle.off{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+.toggle.off::after{left:2px;right:auto}
+.evt-section{font-size:7px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.3px;padding:3px 0 2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:3px}
+.msg-box{background:var(--color-background-secondary);border-radius:5px;padding:5px 6px;font-size:7px;color:var(--color-text-primary);font-style:italic;margin-bottom:5px;line-height:1.4}
+.gift-chips{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+.gift-chip{font-size:6px;padding:2px 6px;border-radius:10px}
+.gc-coral{background:#FAECE7;color:#993C1D;border:0.5px solid #F0997B}
+.gc-purple{background:#EEEDFE;color:#534AB7;border:0.5px solid #AFA9EC}
+.gc-teal{background:#E1F5EE;color:#0F6E56;border:0.5px solid #5DCAA5}
+</style>
+
+<h2 class="sr-only">Esboços visuais de todas as telas do app Lembrai — Onboarding, Home, Pessoas, Eventos, Tarefas, Alertas e Configurações</h2>
+
+<div class="wrap">
+
+<div class="section-label">1 — Onboarding</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="step-dots"><span class="sdot on"></span><span class="sdot"></span><span class="sdot"></span></div>
+          <div class="onb-illo"><i class="ti ti-bell" aria-hidden="true"></i></div>
+          <div class="onb-title">Nunca esqueça o que importa</div>
+          <div class="onb-sub">Aniversários, eventos e tarefas num só lugar</div>
+          <div class="btn-solid">Começar</div>
+          <div style="text-align:center;margin-top:5px;font-size:7px;color:var(--color-text-secondary)">Pular</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">1.1 Boas-vindas</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="step-dots"><span class="sdot"></span><span class="sdot on"></span><span class="sdot"></span></div>
+          <div style="display:flex;gap:4px;margin:8px 0 10px">
+            <div style="flex:1;text-align:center">
+              <div style="height:28px;background:#EEEDFE;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:3px"><i class="ti ti-cake" style="font-size:14px;color:#7F77DD" aria-hidden="true"></i></div>
+              <div style="font-size:6px;color:var(--color-text-secondary)">Aniversários</div>
+            </div>
+            <div style="flex:1;text-align:center">
+              <div style="height:28px;background:#E1F5EE;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:3px"><i class="ti ti-calendar-event" style="font-size:14px;color:#1D9E75" aria-hidden="true"></i></div>
+              <div style="font-size:6px;color:var(--color-text-secondary)">Eventos</div>
+            </div>
+            <div style="flex:1;text-align:center">
+              <div style="height:28px;background:#FAEEDA;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:3px"><i class="ti ti-checkbox" style="font-size:14px;color:#EF9F27" aria-hidden="true"></i></div>
+              <div style="font-size:6px;color:var(--color-text-secondary)">Tarefas</div>
+            </div>
+          </div>
+          <div class="onb-title">Como funciona</div>
+          <div class="onb-sub">Cadastre pessoas, eventos e tarefas. O Lembrai avisa você na hora certa.</div>
+          <div class="btn-solid">Entendi</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">1.2 Como funciona</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="step-dots"><span class="sdot"></span><span class="sdot"></span><span class="sdot on"></span></div>
+          <div class="onb-illo"><i class="ti ti-bell-ringing" aria-hidden="true"></i></div>
+          <div class="onb-title">Ativar notificações</div>
+          <div class="onb-sub">Para te lembrar na hora certa, precisamos de permissão.</div>
+          <div class="perm-row"><span class="perm-lbl">Notificações push</span><div class="toggle"></div></div>
+          <div class="perm-row"><span class="perm-lbl">Importar contatos</span><div class="toggle off"></div></div>
+          <div class="btn-solid" style="margin-top:8px">Permitir</div>
+          <div style="text-align:center;margin-top:4px;font-size:7px;color:var(--color-text-secondary)">Agora não</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">1.3 Permissões</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div style="text-align:center;margin:6px 0 8px"><i class="ti ti-user-circle" style="font-size:28px;color:#7F77DD" aria-hidden="true"></i></div>
+          <div class="onb-title">Criar sua conta</div>
+          <div class="onb-sub" style="margin-bottom:8px">Seus dados ficam salvos com segurança.</div>
+          <div class="field"><div class="field-lbl">Nome</div><div class="field-val">João Silva</div></div>
+          <div class="field"><div class="field-lbl">E-mail</div><div class="field-val">joao@email.com</div></div>
+          <div class="field"><div class="field-lbl">Senha</div><div class="field-val">••••••••</div></div>
+          <div class="btn-solid">Criar conta</div>
+          <div style="text-align:center;margin-top:5px;font-size:7px;color:#7F77DD">Entrar com Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">1.4 Cadastro</div>
+  </div>
+
+</div>
+
+<div class="section-label">2 — Home / Dashboard</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="hero-card">
+            <div class="h-greet">Olá, João</div>
+            <div class="h-date">Terça-feira</div>
+            <div class="h-sub">Você tem 3 lembretes próximos</div>
+          </div>
+          <div class="mini-card">
+            <div class="card-ttl">Próximos lembretes</div>
+            <div class="row-item"><div class="dot dp"></div><div style="flex:1"><div class="ri-name">Ana Lima</div><div class="ri-sub">Aniversário · amanhã</div></div><span class="badge b-purple">Amanhã</span></div>
+            <div class="row-item"><div class="dot dt"></div><div style="flex:1"><div class="ri-name">Reunião de equipe</div><div class="ri-sub">Evento · hoje 15h</div></div><span class="badge b-green">Hoje</span></div>
+            <div class="row-item"><div class="dot da"></div><div style="flex:1"><div class="ri-name">Enviar relatório</div><div class="ri-sub">Tarefa · sexta</div></div><span class="badge b-amber">Semana</span></div>
+          </div>
+          <div class="mini-card">
+            <div class="streak-box"><div class="streak-n">7</div><div><div class="streak-lbl" style="font-weight:500">dias seguidos!</div><div class="streak-lbl" style="opacity:.7">Continue assim</div></div></div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item on"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">2.1 Dashboard</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Lembrai</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="hero-card">
+            <div class="h-greet">Olá, João</div>
+            <div class="h-date">Terça-feira</div>
+            <div class="h-sub">Você tem 3 lembretes próximos</div>
+          </div>
+          <div class="mini-card">
+            <div class="card-ttl">Aniversários este mês</div>
+            <div class="row-item"><div class="avatar">AL</div><div style="flex:1"><div class="ri-name">Ana Lima</div><div class="ri-sub">25/06 · amanhã</div></div></div>
+            <div class="row-item"><div class="avatar av-teal">CS</div><div style="flex:1"><div class="ri-name">Carlos Silva</div><div class="ri-sub">30/06 · em 6 dias</div></div></div>
+            <div class="row-item"><div class="avatar av-amber">MF</div><div style="flex:1"><div class="ri-name">Maria Fernanda</div><div class="ri-sub">12/07 · em 18 dias</div></div></div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item on"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">2.2 Home (scroll)</div>
+  </div>
+
+</div>
+
+<div class="section-label">3 — Pessoas</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Pessoas</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="section-head"><span class="sh-title">Contatos</span><span class="sh-btn"><i class="ti ti-plus" style="font-size:8px"></i> Adicionar</span></div>
+          <div class="chips-row">
+            <span class="chip sel">Todos</span><span class="chip">Família</span><span class="chip">Amigos</span><span class="chip">Trabalho</span>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="row-item"><div class="avatar">AL</div><div style="flex:1"><div class="ri-name">Ana Lima</div><div class="ri-sub">25/06 · Amiga</div></div><span class="tag">Amigos</span></div>
+            <div class="row-item"><div class="avatar av-teal">CS</div><div style="flex:1"><div class="ri-name">Carlos Silva</div><div class="ri-sub">30/06 · Irmão</div></div><span class="tag">Família</span></div>
+            <div class="row-item"><div class="avatar av-amber">MF</div><div style="flex:1"><div class="ri-name">Maria Fernanda</div><div class="ri-sub">12/08 · Colega</div></div><span class="tag">Trabalho</span></div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item on"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">3a. Lista de contatos</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Nova pessoa</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="field"><div class="field-lbl">Nome completo *</div><div class="field-val">Ana Lima</div></div>
+          <div class="field"><div class="field-lbl">Data de aniversário *</div><div class="field-val">25/06/1994</div></div>
+          <div class="field"><div class="field-lbl">Categoria *</div><div class="field-val">Amigos <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="field"><div class="field-lbl">Telefone / WhatsApp</div><div class="field-val">+55 11 99999-9999</div></div>
+          <div class="field"><div class="field-lbl">Nota pessoal</div><div class="field-val">Gosta de flores</div></div>
+          <div class="btn-solid">Salvar contato</div>
+          <div class="btn-outline">Cancelar</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">3b. Formulário</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Perfil</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="detail-avatar">AL</div>
+          <div class="detail-name">Ana Lima</div>
+          <div class="detail-sub">Aniversário 25/06 · vai fazer 32 anos</div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="row-item"><i class="ti ti-phone" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">+55 11 99999-9999</div></div>
+            <div class="row-item"><i class="ti ti-tag" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Amigos</div></div>
+            <div class="row-item"><i class="ti ti-notes" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Gosta de flores</div></div>
+          </div>
+          <div class="btn-row">
+            <div class="btn-outline">Editar</div>
+            <div class="btn-solid">WhatsApp</div>
+          </div>
+          <div class="btn-outline" style="margin-top:4px;color:#A32D2D;border-color:#F09595">Excluir</div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item on"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">3c. Perfil detalhado</div>
+  </div>
+
+</div>
+
+<div class="section-label">4 — Eventos</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Eventos</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="section-head"><span class="sh-title">Eventos</span><span class="sh-btn"><i class="ti ti-plus" style="font-size:8px"></i> Novo</span></div>
+          <div class="evt-section">Hoje</div>
+          <div class="row-item" style="margin-bottom:3px"><div class="dot dt"></div><div style="flex:1"><div class="ri-name">Reunião de equipe</div><div class="ri-sub">15h · Google Meet</div></div></div>
+          <div class="evt-section" style="margin-top:4px">Esta semana</div>
+          <div class="row-item"><div class="dot dp"></div><div style="flex:1"><div class="ri-name">Festa da Ana</div><div class="ri-sub">Sáb 25/06 · 19h</div></div></div>
+          <div class="row-item"><div class="dot dc"></div><div style="flex:1"><div class="ri-name">Consulta médica</div><div class="ri-sub">Sex 27/06 · 10h</div></div></div>
+          <div class="evt-section" style="margin-top:4px">Próximo mês</div>
+          <div class="row-item"><div class="dot da"></div><div style="flex:1"><div class="ri-name">Viagem São Paulo</div><div class="ri-sub">10/07 · Viagem</div></div></div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item on"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">4a. Lista de eventos</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Novo evento</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="field"><div class="field-lbl">Nome do evento *</div><div class="field-val">Festa da Ana</div></div>
+          <div class="field"><div class="field-lbl">Data *</div><div class="field-val">25/06/2026</div></div>
+          <div class="field"><div class="field-lbl">Horário</div><div class="field-val">19:00</div></div>
+          <div class="field"><div class="field-lbl">Local / link</div><div class="field-val">Rua das Flores, 123</div></div>
+          <div class="field"><div class="field-lbl">Tipo *</div><div class="field-val">Festa <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="field"><div class="field-lbl">Recorrência</div><div class="field-val">Não repete <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="field"><div class="field-lbl">Lembrar com antecedência *</div><div class="field-val">1 dia antes <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="btn-solid">Salvar evento</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">4b. Formulário</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Detalhe do evento</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div style="text-align:center;margin:6px 0 4px"><i class="ti ti-confetti" style="font-size:28px;color:#7F77DD" aria-hidden="true"></i></div>
+          <div class="detail-name">Festa da Ana</div>
+          <div class="detail-sub">Sábado, 25 de junho · 19h</div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="row-item"><i class="ti ti-map-pin" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Rua das Flores, 123</div></div>
+            <div class="row-item"><i class="ti ti-repeat" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Não repete</div></div>
+            <div class="row-item"><i class="ti ti-bell" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Alerta 1 dia antes</div></div>
+            <div class="row-item"><i class="ti ti-user" style="font-size:10px;color:var(--color-text-secondary)" aria-hidden="true"></i><div class="ri-name" style="flex:1">Ana Lima</div></div>
+          </div>
+          <div class="btn-row">
+            <div class="btn-outline">Editar</div>
+            <div class="btn-solid">Ver no mapa</div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item on"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">4c. Detalhe do evento</div>
+  </div>
+
+</div>
+
+<div class="section-label">5 — Tarefas</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Tarefas</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="section-head"><span class="sh-title">Tarefas</span><span class="sh-btn"><i class="ti ti-plus" style="font-size:8px"></i> Nova</span></div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Para hoje</div>
+            <div class="row-item"><div class="chk"></div><div style="flex:1"><div class="ri-name">Comprar presente da Ana</div><div class="ri-sub">Aniversário amanhã · Alta</div></div><span class="badge b-purple">Alta</span></div>
+            <div class="row-item"><div class="chk done"><i class="ti ti-check" style="font-size:7px;color:#fff"></i></div><div style="flex:1"><div class="ri-name" style="text-decoration:line-through;opacity:0.5">Preparar apresentação</div><div class="ri-sub">Reunião hoje 15h</div></div></div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Esta semana</div>
+            <div class="row-item"><div class="chk"></div><div style="flex:1"><div class="ri-name">Enviar relatório mensal</div><div class="ri-sub">Vence sexta · Trabalho</div></div><span class="badge b-amber">Média</span></div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Progresso hoje</div>
+            <div style="display:flex;justify-content:space-between;font-size:7px;color:var(--color-text-secondary);margin-bottom:3px"><span>Concluídas</span><span>1 / 3</span></div>
+            <div class="progress-bg"><div class="progress-fill" style="width:33%"></div></div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item on"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">5a. Lista de tarefas</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Nova tarefa</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="field"><div class="field-lbl">Título *</div><div class="field-val">Comprar presente da Ana</div></div>
+          <div class="field"><div class="field-lbl">Data limite *</div><div class="field-val">24/06/2026</div></div>
+          <div style="margin-bottom:4px">
+            <div style="font-size:6px;color:var(--color-text-secondary);margin-bottom:3px">Prioridade *</div>
+            <div style="display:flex;gap:3px">
+              <div style="flex:1;text-align:center;padding:3px;border-radius:5px;background:#EEEDFE;border:0.5px solid #7F77DD;font-size:7px;color:#534AB7">Alta</div>
+              <div style="flex:1;text-align:center;padding:3px;border-radius:5px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);font-size:7px;color:var(--color-text-secondary)">Média</div>
+              <div style="flex:1;text-align:center;padding:3px;border-radius:5px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);font-size:7px;color:var(--color-text-secondary)">Baixa</div>
+            </div>
+          </div>
+          <div class="field"><div class="field-lbl">Vinculada a</div><div class="field-val">Ana Lima (aniversário) <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="field"><div class="field-lbl">Lembrete *</div><div class="field-val">1 dia antes <i class="ti ti-chevron-down" style="font-size:8px" aria-hidden="true"></i></div></div>
+          <div class="field"><div class="field-lbl">Notas</div><div class="field-val" style="opacity:0.5">Observações...</div></div>
+          <div class="btn-solid">Salvar tarefa</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">5b. Formulário</div>
+  </div>
+
+</div>
+
+<div class="section-label">6 — Alertas & Extras</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Alertas</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Notificações de hoje</div>
+            <div class="row-item" style="gap:5px;align-items:flex-start;padding:5px 0">
+              <div class="notif-icon ni-p"><i class="ti ti-cake" style="font-size:10px" aria-hidden="true"></i></div>
+              <div style="flex:1"><div class="ri-name">Aniversário da Ana amanhã!</div><div class="ri-sub">Não esqueça de mandar uma mensagem</div><div style="margin-top:3px;font-size:6px;background:#EEEDFE;color:#534AB7;border-radius:8px;padding:2px 6px;display:inline-block">Enviar mensagem</div></div>
+            </div>
+            <div class="row-item" style="gap:5px;align-items:flex-start;padding:5px 0">
+              <div class="notif-icon ni-t"><i class="ti ti-calendar-event" style="font-size:10px" aria-hidden="true"></i></div>
+              <div style="flex:1"><div class="ri-name">Reunião de equipe em 2h</div><div class="ri-sub">Hoje às 15h · Google Meet</div></div>
+            </div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Sugestão de presente</div>
+            <div style="font-size:7px;color:var(--color-text-secondary);margin-bottom:4px">Ana Lima faz aniversário amanhã. Sugestões:</div>
+            <div class="gift-chips">
+              <span class="gift-chip gc-coral">Flores</span>
+              <span class="gift-chip gc-purple">Livro</span>
+              <span class="gift-chip gc-teal">Chocolate</span>
+            </div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item on"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">6a/b. Alertas + Presente</div>
+  </div>
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Alertas</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Retrospectiva — junho</div>
+            <div class="metric-grid">
+              <div class="metric-cell"><div class="metric-n">4</div><div class="metric-lbl">aniversários</div></div>
+              <div class="metric-cell"><div class="metric-n" style="color:#0F6E56">12</div><div class="metric-lbl">tarefas feitas</div></div>
+              <div class="metric-cell"><div class="metric-n" style="color:#854F0B">3</div><div class="metric-lbl">eventos</div></div>
+              <div class="metric-cell"><div class="metric-n" style="color:#993556">7</div><div class="metric-lbl">streak máx.</div></div>
+            </div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Mensagem rápida</div>
+            <div class="msg-box">"Feliz aniversário, Ana! Que este novo ano seja incrível para você!"</div>
+            <div class="btn-row">
+              <div class="btn-outline" style="margin:0;font-size:6px">Editar</div>
+              <div class="btn-solid" style="margin:0;font-size:6px">WhatsApp</div>
+            </div>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item on"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">6c/d. Retro + Mensagem</div>
+  </div>
+
+</div>
+
+<div class="section-label">7 — Configurações</div>
+<div class="screens-row">
+
+  <div>
+    <div class="phone-frame">
+      <div class="phone-inner">
+        <div class="sb"><span class="sb-title">Configurações</span><span class="sb-time">9:41</span></div>
+        <div class="sc">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff">JS</div>
+            <div><div style="font-size:10px;font-weight:500">João Silva</div><div style="font-size:7px;color:var(--color-text-secondary)">joao@email.com</div></div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Notificações</div>
+            <div class="perm-row"><span class="perm-lbl">Aniversários</span><div class="toggle"></div></div>
+            <div class="perm-row"><span class="perm-lbl">Eventos</span><div class="toggle"></div></div>
+            <div class="perm-row"><span class="perm-lbl">Tarefas</span><div class="toggle"></div></div>
+            <div class="perm-row"><span class="perm-lbl">Horário do alerta</span><span style="font-size:8px;font-weight:500">08:00</span></div>
+          </div>
+          <div class="mini-card" style="padding:5px 8px">
+            <div class="card-ttl">Aparência</div>
+            <div class="perm-row"><span class="perm-lbl">Tema escuro</span><div class="toggle off"></div></div>
+          </div>
+          <div class="btn-outline" style="color:#A32D2D;border-color:#F09595;margin-top:6px">Sair da conta</div>
+        </div>
+        <div class="nb">
+          <div class="nb-item"><i class="ti ti-home"></i>Início</div>
+          <div class="nb-item"><i class="ti ti-users"></i>Pessoas</div>
+          <div class="nb-item"><i class="ti ti-calendar-event"></i>Eventos</div>
+          <div class="nb-item"><i class="ti ti-checkbox"></i>Tarefas</div>
+          <div class="nb-item"><i class="ti ti-bell"></i>Alertas</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">7. Configurações</div>
+  </div>
+
+</div>
+
+</div>
